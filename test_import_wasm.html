@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Test import of WASM module to another WASM module</title>
+    <script>
+
+    (async () => {
+        let response = await fetch('importable/target/wasm32-unknown-unknown/release/importable.wasm');
+        let bytes = await response.arrayBuffer();
+        let { instance } = await WebAssembly.instantiate(bytes, { });
+
+        console.log('Importable instance add: ', instance.exports.add(1,3));
+
+    })();
+    
+    //TODO: does not run yet not sure how to add two wasm files to same namespace,
+    // do they need to be linked via Javascript WASM API or on lower level?
+    
+    // (async () => {
+    //     let response = await fetch('main/target/wasm32-unknown-unknown/release/main.wasm');
+    //     let bytes = await response.arrayBuffer();
+    //     let { instance } = await WebAssembly.instantiate(bytes, { });
+
+    //     console.log('Main instance add: ', instance());
+
+    // })();
+
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
